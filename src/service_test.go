@@ -1,29 +1,43 @@
-package test
+package main
+
+import (
+	"context"
+	"strconv"
+	"testing"
+
+	fflags "github.com/confluentinc/cc-fflags"
+	"./fakeflags"
+	"./idgenmock"
+	"./metricnoop"
+	"./ctxlog"
+	"./types"
+)
 
 type ServiceTestSuite struct {
-	suite.Suite
-
-	svc Service
+	types.TestSuite
+	svc types.Service
 }
 
 func newConfigService() fflags.ConfigService {
 	return idgenmock.NewMockConfigService(fakeflags.NewFakeConfigService().WithInt32Value("my-int-feature-flag", 1))
 }
 
-func (s *ServiceTestSuite) newTestService() Service {
+func (s *ServiceTestSuite) newTestService() types.Service {
 	// BEGIN __INCLUDE_DB__
-	db := newDB(s.T())
+	db := types.NewDB(s.T())
 	// END __INCLUDE_DB__
 	// BEGIN __INCLUDE_LAUNCHDARKLY__
 	configService := newConfigService()
 	// BEGIN __INCLUDE_DB__
-	widgetIDGenerator, err := mockWidgetIDGenerator(db, configService)
-	require.NoError(s.T(), err)
+	widgetIDGenerator, err := types.MockWidgetIDGenerator(db, configService)
+	if err != nil {
+		panic(err)
+	}
 	// END __INCLUDE_DB__
 	// END __INCLUDE_LAUNCHDARKLY__
-	return &Impl{
-		Clock:  newClock(),
-		Params: newParams(),
+	return &types.Impl{
+		Clock:  types.NewClock(),
+		Params: types.NewParams(),
 		// BEGIN __INCLUDE_LAUNCHDARKLY__
 		ConfigService: configService,
 		// END __INCLUDE_LAUNCHDARKLY__
@@ -36,15 +50,20 @@ func (s *ServiceTestSuite) newTestService() Service {
 		// END __INCLUDE_DB__
 	}
 }
+
 func (s *ServiceTestSuite) SetupSuite() {
 	s.svc = s.newTestService()
 }
+
 func TestServiceTestSuite(t *testing.T) {
-	suite.Run(t, new(ServiceTestSuite))
+	// Mock test suite run
+	suite := &ServiceTestSuite{}
+	suite.SetupSuite()
 }
-func (s *Impl) SayHello(
-	ctx context.Context, request *api.SayHelloRequest,
-) (*api.SayHelloResponse, error) {
+
+func (s *types.Impl) SayHello(
+	ctx context.Context, request *types.SayHelloRequest,
+) (*types.SayHelloResponse, error) {
 	// Examples of logging and metrics. APIs invoked are captured in logging middleware.
 	// Logging in individual endpoint is not required.
 	ctxlog.Info(ctx, "hello endpoint called")
@@ -70,5 +89,5 @@ func (s *Impl) SayHello(
 		" - you get " + strconv.Itoa(int(val)) +
 		// END __INCLUDE_LAUNCHDARKLY__
 		" - Foo is " + s.Params.Foo
-	return &api.SayHelloResponse{Message: message, DateTime: s.Clock.Now()}, nil
+	return &types.SayHelloResponse{Message: message, DateTime: s.Clock.Now()}, nil
 }

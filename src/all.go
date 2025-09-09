@@ -10,8 +10,8 @@ import (
 	"github.com/go-kit/kit/log"
 
 	fflags "github.com/confluentinc/cc-fflags"
-	fsflags "github.com/confluentinc/cc-fflags/static"
-	"github.com/confluentinc/cc-fflags/launchdarkly"
+	fsflags "./static"
+	"./launchdarkly"
 	corev1 "github.com/confluentinc/cc-structs/kafka/core/v1"
 	orgv1 "github.com/confluentinc/cc-structs/kafka/org/v1"
 	productv1 "github.com/confluentinc/cc-structs/kafka/product/core/v1"
