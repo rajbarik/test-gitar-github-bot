@@ -7,10 +7,10 @@ import (
   "os"
   "time"
 
-  "github.com/go-kit/kit/log"
-  fflags_main "github.com/confluentinc/cc-fflags"
-  corev1 "github.com/confluentinc/cc-structs/kafka/core/v1"
-  orgv1 "github.com/confluentinc/cc-structs/kafka/org/v1"
+  log "./go-kit"
+  fflags_main "./cc-fflags"
+  corev1 "./cc-structs/core/v1"
+  orgv1 "./cc-structs/org/v1"
   
   fflags "./static"
   fflagsmock "./mock"

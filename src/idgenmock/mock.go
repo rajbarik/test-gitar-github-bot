@@ -6,7 +6,7 @@ import (
   "math/rand"
   "time"
 
-  fflags "github.com/confluentinc/cc-fflags"
+  fflags "../cc-fflags"
   "../fakeflags"
 )
 

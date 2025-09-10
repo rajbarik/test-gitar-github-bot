@@ -7,8 +7,8 @@ import (
 	"./launchdarkly"
 	"./static"
 	"./mock"
-	"github.com/go-kit/kit/log"
-	fflags "github.com/confluentinc/cc-fflags"
+	log "./go-kit"
+	fflags "./cc-fflags"
 )
 
 func main() {

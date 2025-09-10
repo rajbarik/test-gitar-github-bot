@@ -7,14 +7,14 @@ import (
 	"os"
 	"time"
 
-	"github.com/go-kit/kit/log"
+	log "./go-kit" // Local mock for github.com/go-kit/kit/log
 
-	fflags "github.com/confluentinc/cc-fflags"
+	fflags "./cc-fflags" // Local mock for github.com/confluentinc/cc-fflags
 	fsflags "./static"
 	"./launchdarkly"
-	corev1 "github.com/confluentinc/cc-structs/kafka/core/v1"
-	orgv1 "github.com/confluentinc/cc-structs/kafka/org/v1"
-	productv1 "github.com/confluentinc/cc-structs/kafka/product/core/v1"
+	corev1 "./cc-structs/core/v1"
+	orgv1 "./cc-structs/org/v1"
+	productv1 "./cc-structs/product/core/v1"
     org_flags "./flags"
 )
 

@@ -6,12 +6,12 @@ import (
   "os"
   "time"
 
-  "github.com/go-kit/kit/log"
+  log "./go-kit"
 
-  fflags "github.com/confluentinc/cc-fflags"
+  fflags "./cc-fflags"
   "./launchdarkly"
-  corev1 "github.com/confluentinc/cc-structs/kafka/core/v1"
-  orgv1 "github.com/confluentinc/cc-structs/kafka/org/v1"
+  corev1 "./cc-structs/core/v1"
+  orgv1 "./cc-structs/org/v1"
   
   "./flags"
 )

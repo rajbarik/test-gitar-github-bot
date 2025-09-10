@@ -6,8 +6,8 @@ import (
 	"math/rand"
 	"time"
 
-	"github.com/go-kit/kit/log"
-	fflags "github.com/confluentinc/cc-fflags"
+	log "../go-kit"
+	fflags "../cc-fflags"
 )
 
 // FeatureFlags provides static feature flag implementations
