@@ -104,11 +104,11 @@ jobs:
         # Test that main.go runs without errors
         timeout 10s go run main.go || echo "Main execution completed"
         
-        # Test individual example files
-        for example in bool_value.go string_value.go int_value.go; do
-          echo "Testing $example..."
-          timeout 10s go run "$example" || echo "$example execution completed"
-        done
+          # Test individual example files
+          for example in examples/bool_value.go examples/string_value.go examples/int_value.go; do
+            echo "Testing $example..."
+            timeout 10s go run "$example" || echo "$example execution completed"
+          done
     
     - name: Check for race conditions
       run: |
