@@ -9,9 +9,9 @@ import (
   "github.com/go-kit/kit/log"
 
   "github.com/confluentinc/cc-fflags"
-  "./launchdarkly"
+  "confluent-test/launchdarkly"
   
-  "./flags"
+  "confluent-test/flags"
 )
 
 func int_value(ld *launchdarkly.LDClient, logger log.Logger) {

@@ -6,8 +6,8 @@ import (
   "testing"
 
   fflags "github.com/confluentinc/cc-fflags"
-  "../metricnoop"
-  "../idgenmock"
+  "confluent-test/metricnoop"
+  "confluent-test/idgenmock"
 )
 
 // Service interface for the test service

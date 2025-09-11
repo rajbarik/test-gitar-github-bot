@@ -12,8 +12,8 @@ import (
   corev1 "github.com/confluentinc/cc-structs/kafka/core/v1"
   orgv1 "github.com/confluentinc/cc-structs/kafka/org/v1"
   
-  fflags "./static"
-  fflagsmock "./mock"
+  fflags "confluent-test/static"
+  fflagsmock "confluent-test/mock"
 )
 
 func custom_bool_value() {

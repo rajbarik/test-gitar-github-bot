@@ -10,12 +10,12 @@ import (
   "github.com/go-kit/kit/log"
 
   fflags "github.com/confluentinc/cc-fflags"
-  fsflags "./static"
-  "./launchdarkly"
+  fsflags "confluent-test/static"
+  "confluent-test/launchdarkly"
   corev1 "github.com/confluentinc/cc-structs/kafka/core/v1"
   orgv1 "github.com/confluentinc/cc-structs/kafka/org/v1"
   productv1 "github.com/confluentinc/cc-structs/kafka/product/core/v1"
-    org_flags "./flags"
+    org_flags "confluent-test/flags"
 )
 
 func string_flag_key_test(ffs *fflags.FFlags) {

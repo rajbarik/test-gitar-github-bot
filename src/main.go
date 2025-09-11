@@ -4,9 +4,9 @@ import (
   "fmt"
   "os"
 
-  "./launchdarkly"
-  "./static"
-  "./mock"
+  "confluent-test/launchdarkly"
+  "confluent-test/static"
+  "confluent-test/mock"
   "github.com/go-kit/kit/log"
   fflags "github.com/confluentinc/cc-fflags"
 )

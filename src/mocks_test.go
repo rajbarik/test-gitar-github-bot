@@ -5,10 +5,10 @@ import (
 	"testing"
 
 	fflags "github.com/confluentinc/cc-fflags"
-	"./launchdarkly"
-	"./static"
-	"./mock"
-	"./flags"
+	"confluent-test/launchdarkly"
+	"confluent-test/static"
+	"confluent-test/mock"
+	"confluent-test/flags"
 	"github.com/go-kit/kit/log"
 )
 

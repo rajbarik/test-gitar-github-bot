@@ -6,11 +6,11 @@ import (
   "testing"
 
   fflags "github.com/confluentinc/cc-fflags"
-  "./fakeflags"
-  "./idgenmock"
-  "./metricnoop"
-  "./ctxlog"
-  "./types"
+  "confluent-test/fakeflags"
+  "confluent-test/idgenmock"
+  "confluent-test/metricnoop"
+  "confluent-test/ctxlog"
+  "confluent-test/types"
 )
 
 type ServiceTestSuite struct {

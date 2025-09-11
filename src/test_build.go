@@ -7,13 +7,13 @@ import (
 
   "github.com/go-kit/kit/log"
   fflags "github.com/confluentinc/cc-fflags"
-  "./launchdarkly"
-  "./static"
-  "./mock"
+  "confluent-test/launchdarkly"
+  "confluent-test/static"
+  "confluent-test/mock"
   corev1 "github.com/confluentinc/cc-structs/kafka/core/v1"
   orgv1 "github.com/confluentinc/cc-structs/kafka/org/v1"
   productv1 "github.com/confluentinc/cc-structs/kafka/product/core/v1"
-  "./flags"
+  "confluent-test/flags"
 )
 
 func testBuild() {

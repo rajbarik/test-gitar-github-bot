@@ -9,11 +9,11 @@ import (
   "github.com/go-kit/kit/log"
 
   fflags "github.com/confluentinc/cc-fflags"
-  "./launchdarkly"
+  "confluent-test/launchdarkly"
   corev1 "github.com/confluentinc/cc-structs/kafka/core/v1"
   orgv1 "github.com/confluentinc/cc-structs/kafka/org/v1"
   
-  "./flags"
+  "confluent-test/flags"
 )
 
 func cluster_bool_value(ld *launchdarkly.LDClient, logger log.Logger) {

@@ -7,7 +7,7 @@ import (
   "time"
 
   fflags "github.com/confluentinc/cc-fflags"
-  "../fakeflags"
+  "confluent-test/fakeflags"
 )
 
 // MockConfigService wraps fake config service for testing
