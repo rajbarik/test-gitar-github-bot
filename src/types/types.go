@@ -1,44 +1,43 @@
 package types
 
 import (
-	"context"
-	"testing"
-	"time"
+  "context"
+  "testing"
+  "time"
 
-	"confluent-test/idgenmock"
-	"confluent-test/metricnoop"
-	fflags "github.com/confluentinc/cc-fflags"
+  "confluent-test/metricnoop"
+  fflags "github.com/confluentinc/cc-fflags"
 )
 
 // Service interface for the test service
 type Service interface {
-	SayHello(ctx context.Context, request *SayHelloRequest) (*SayHelloResponse, error)
+  SayHello(ctx context.Context, request *SayHelloRequest) (*SayHelloResponse, error)
 }
 
 // SayHelloRequest represents a hello request
 type SayHelloRequest struct {
-	Name string
+  Name string
 }
 
 // SayHelloResponse represents a hello response
 type SayHelloResponse struct {
-	Message  string
-	DateTime time.Time
+  Message  string
+  DateTime time.Time
 }
 
 // Impl provides service implementation
 type Impl struct {
-	Clock             Clock
-	Params            Params
-	ConfigService     fflags.ConfigService
-	MeterProvider     *metricnoop.MeterProvider
-	DB                interface{}
-	WidgetIDGenerator interface{}
+  Clock             Clock
+  Params            Params
+  ConfigService     fflags.ConfigService
+  MeterProvider     *metricnoop.MeterProvider
+  DB                interface{}
+  WidgetIDGenerator interface{}
 }
 
 // Clock interface for time operations
 type Clock interface {
-	Now() time.Time
+  Now() time.Time
 }
 
 // RealClock implements Clock interface
@@ -46,17 +45,17 @@ type RealClock struct{}
 
 // Now returns current time
 func (c *RealClock) Now() time.Time {
-	return time.Now()
+  return time.Now()
 }
 
 // Params holds service parameters
 type Params struct {
-	Foo string
+  Foo string
 }
 
 // MockWidgetIDGenerator creates a mock widget ID generator
 func MockWidgetIDGenerator(db interface{}, configService fflags.ConfigService) (interface{}, error) {
-	return &MockGenerator{}, nil
+  return &MockGenerator{}, nil
 }
 
 // MockGenerator provides mock ID generation
@@ -64,17 +63,17 @@ type MockGenerator struct{}
 
 // NewClock creates a new real clock
 func NewClock() Clock {
-	return &RealClock{}
+  return &RealClock{}
 }
 
 // NewParams creates new service parameters
 func NewParams() Params {
-	return Params{Foo: "test"}
+  return Params{Foo: "test"}
 }
 
 // NewDB creates a mock database for testing
 func NewDB(t *testing.T) interface{} {
-	return &MockDB{}
+  return &MockDB{}
 }
 
 // MockDB provides mock database implementation
@@ -82,20 +81,20 @@ type MockDB struct{}
 
 // Suite interface for test suites
 type Suite interface {
-	T() *testing.T
+  T() *testing.T
 }
 
 // TestSuite provides basic test suite functionality
 type TestSuite struct {
-	t *testing.T
+  t *testing.T
 }
 
 // NewTestSuite creates a new test suite with testing.T
 func NewTestSuite(t *testing.T) TestSuite {
-	return TestSuite{t: t}
+  return TestSuite{t: t}
 }
 
 // T returns the testing.T instance
 func (s *TestSuite) T() *testing.T {
-	return s.t
+  return s.t
 }

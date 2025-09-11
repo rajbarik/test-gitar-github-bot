@@ -71,9 +71,9 @@ issues:
   exclude-use-default: false
   max-issues-per-linter: 0
   max-same-issues: 0
+  exclude-dirs:
+    - examples
 
 run:
   timeout: 5m
   modules-download-mode: readonly
-  skip-dirs:
-    - examples
