@@ -1,10 +1,9 @@
 linters-settings:
   govet:
-    check-shadowing: true
+    enable:
+      - shadow
   gocyclo:
     min-complexity: 15
-  maligned:
-    suggest-new: true
   dupl:
     threshold: 100
   goconst:
@@ -28,7 +27,6 @@ linters-settings:
 linters:
   enable:
     - bodyclose
-    - deadcode
     - depguard
     - dogsled
     - dupl
@@ -47,12 +45,10 @@ linters:
     - misspell
     - nakedret
     - staticcheck
-    - structcheck
     - typecheck
     - unconvert
     - unparam
     - unused
-    - varcheck
     - whitespace
   disable:
     - gochecknoglobals
@@ -77,5 +73,5 @@ issues:
   max-same-issues: 0
 
 run:
-  deadline: 5m
+  timeout: 5m
   modules-download-mode: readonly

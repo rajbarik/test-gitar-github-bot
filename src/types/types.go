@@ -5,7 +5,7 @@ import (
   "time"
   "testing"
 
-  fflags "../cc-fflags"
+  fflags "github.com/confluentinc/cc-fflags"
   "../metricnoop"
   "../idgenmock"
 )

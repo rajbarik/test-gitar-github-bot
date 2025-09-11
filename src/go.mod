@@ -2,12 +2,15 @@ module confluent-test
 
 go 1.21
 
-// All dependencies are now mocked locally - no external dependencies required
+require (
+	github.com/confluentinc/cc-fflags v0.0.0-00010101000000-000000000000
+	github.com/confluentinc/cc-structs v0.0.0-00010101000000-000000000000  
+	github.com/go-kit/kit v0.0.0-00010101000000-000000000000
+)
 
+// All dependencies are now mocked locally - no external dependencies required
 replace (
 	github.com/confluentinc/cc-fflags => ./cc-fflags
-	github.com/confluentinc/cc-structs/kafka/core/v1 => ./cc-structs
-	github.com/confluentinc/cc-structs/kafka/org/v1 => ./cc-structs
-	github.com/confluentinc/cc-structs/kafka/product/core/v1 => ./cc-structs
-	github.com/go-kit/kit/log => ./go-kit
+	github.com/confluentinc/cc-structs => ./cc-structs  
+	github.com/go-kit/kit => ./go-kit
 )

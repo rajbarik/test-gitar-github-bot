@@ -6,9 +6,9 @@ import (
   "os"
   "time"
 
-  log "./go-kit"
+  "github.com/go-kit/kit/log"
 
-  fflags "./cc-fflags"
+  "github.com/confluentinc/cc-fflags"
   "./launchdarkly"
   
   "./flags"

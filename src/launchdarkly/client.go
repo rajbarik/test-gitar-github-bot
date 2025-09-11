@@ -4,7 +4,7 @@ import (
   "math/rand"
   "time"
 
-  log "../go-kit"
+  "github.com/go-kit/kit/log"
 )
 
 // LDClient is a mock LaunchDarkly client

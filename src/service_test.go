@@ -5,7 +5,7 @@ import (
   "strconv"
   "testing"
 
-  fflags "./cc-fflags"
+  fflags "github.com/confluentinc/cc-fflags"
   "./fakeflags"
   "./idgenmock"
   "./metricnoop"

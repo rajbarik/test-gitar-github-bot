@@ -4,12 +4,12 @@ import (
 	"context"
 	"testing"
 
-	fflags "./cc-fflags"
+	fflags "github.com/confluentinc/cc-fflags"
 	"./launchdarkly"
 	"./static"
 	"./mock"
 	"./flags"
-	log "./go-kit"
+	"github.com/go-kit/kit/log"
 )
 
 func TestLaunchDarklyMock(t *testing.T) {

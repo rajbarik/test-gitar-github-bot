@@ -6,7 +6,7 @@ import (
   "math/rand"
   "time"
 
-  fflags "../cc-fflags"
+  fflags "github.com/confluentinc/cc-fflags"
 )
 
 // MockConfigService provides mock implementations for config service
