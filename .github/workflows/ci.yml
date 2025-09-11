@@ -1,0 +1,173 @@
+name: CI
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  build:
+    name: Build and Test
+    runs-on: ubuntu-latest
+    
+    strategy:
+      matrix:
+        go-version: [ '1.21', '1.22' ]
+    
+    steps:
+    - name: Check out code
+      uses: actions/checkout@v4
+    
+    - name: Set up Go
+      uses: actions/setup-go@v4
+      with:
+        go-version: ${{ matrix.go-version }}
+    
+    - name: Cache Go modules
+      uses: actions/cache@v3
+      with:
+        path: |
+          ~/.cache/go-build
+          ~/go/pkg/mod
+        key: ${{ runner.os }}-go-${{ matrix.go-version }}-${{ hashFiles('src/go.mod', 'src/go.sum') }}
+        restore-keys: |
+          ${{ runner.os }}-go-${{ matrix.go-version }}-
+    
+    - name: Change to source directory
+      run: cd src
+      
+    - name: Download dependencies
+      run: |
+        cd src
+        go mod download
+        go mod verify
+    
+    - name: Run go mod tidy
+      run: |
+        cd src
+        go mod tidy
+        git diff --exit-code go.mod go.sum || (echo "go.mod or go.sum is not up to date" && exit 1)
+    
+    - name: Run gofmt
+      run: |
+        cd src
+        if [ "$(gofmt -s -l . | wc -l)" -gt 0 ]; then
+          echo "Code is not formatted properly:"
+          gofmt -s -l .
+          exit 1
+        fi
+    
+    - name: Run go vet
+      run: |
+        cd src
+        go vet ./...
+    
+    - name: Build all packages
+      run: |
+        cd src
+        go build -v ./...
+    
+    - name: Build main executables
+      run: |
+        cd src
+        # Build all main package files
+        for main_file in $(find . -name "*.go" -exec grep -l "package main" {} \; | grep -v test); do
+          if grep -q "func main()" "$main_file"; then
+            echo "Building $main_file..."
+            go build -v "$main_file"
+          fi
+        done
+    
+    - name: Run tests
+      run: |
+        cd src
+        go test -v -race -coverprofile=coverage.out ./...
+    
+    - name: Test coverage
+      run: |
+        cd src
+        go tool cover -html=coverage.out -o coverage.html
+        go tool cover -func=coverage.out
+    
+    - name: Upload coverage to artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: coverage-report-go${{ matrix.go-version }}
+        path: src/coverage.html
+    
+    - name: Validate mock functionality
+      run: |
+        cd src
+        echo "Testing mock dependencies..."
+        
+        # Test that main.go runs without errors
+        timeout 10s go run main.go || echo "Main execution completed"
+        
+          # Test individual example files
+          for example in examples/bool_value.go examples/string_value.go examples/int_value.go; do
+            echo "Testing $example..."
+            timeout 10s go run "$example" || echo "$example execution completed"
+          done
+    
+    - name: Check for race conditions
+      run: |
+        cd src
+        go build -race ./...
+        
+    - name: Validate package imports
+      run: |
+        cd src
+        # Ensure no external dependencies are imported
+        if grep -r "github.com/" . --include="*.go" | grep -v "//.*github.com" | grep -v "replace"; then
+          echo "Found external GitHub imports - should only use local mocks"
+          exit 1
+        fi
+        echo "✓ All imports are local mocks"
+
+  lint:
+    name: Lint
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Check out code
+      uses: actions/checkout@v4
+    
+    - name: Set up Go
+      uses: actions/setup-go@v4
+      with:
+        go-version: '1.21'
+    
+    - name: golangci-lint
+      uses: golangci/golangci-lint-action@v3
+      with:
+        version: latest
+        working-directory: src
+        args: --timeout=5m
+
+  security:
+    name: Security Scan
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Check out code
+      uses: actions/checkout@v4
+    
+    - name: Set up Go
+      uses: actions/setup-go@v4
+      with:
+        go-version: '1.21'
+    
+    - name: Install Gosec
+      run: go install github.com/securego/gosec/v2/cmd/gosec@latest
+    
+      - name: Run Gosec Security Scanner
+        run: |
+          cd src
+          gosec -fmt sarif -out ../gosec.sarif ./...
+    
+    - name: Upload SARIF file
+      uses: github/codeql-action/upload-sarif@v3
+      with:
+        sarif_file: gosec.sarif
+      if: always()

@@ -1,0 +1,29 @@
+#
+# Custom flags
+# Kafka
+#
+
+- name: EnableMyCustomFeatureFlag
+  key: my-custom-feature-flag
+  type: bool
+  default: false
+- name: EnableMyCustomIntFeatureFlag
+  key: my-custom-int-feature-flag
+  type: int32
+  default: 123
+- name: EnableMyCustomStringFeatureFlag
+  key: my-custom-str-feature-flag
+  type: string
+  cluster_scoped: true
+  default: ~
+- name: EnableMyCustomDoubleFeatureFlag
+  key: my-custom-double-feature-flag
+  type: float64
+  default: 123.123
+  cluster_scoped: true
+  go_flag: EnableMyCustomDoubleFeatureFlag
+- name: EnableMyCustomJSONFeatureFlag
+  key: my-custom-json-feature-flag
+  type: json.RawMessage
+  default: '"{}"'
+  cluster_scoped: true
