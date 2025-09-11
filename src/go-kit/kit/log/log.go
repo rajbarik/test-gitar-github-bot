@@ -32,14 +32,14 @@ func (l *JSONLogger) Log(keyvals ...interface{}) error {
 	if len(keyvals)%2 != 0 {
 		keyvals = append(keyvals, "MISSING_VALUE")
 	}
-	
+
 	var pairs []string
 	for i := 0; i < len(keyvals); i += 2 {
 		key := fmt.Sprintf("%v", keyvals[i])
 		value := fmt.Sprintf("%v", keyvals[i+1])
 		pairs = append(pairs, fmt.Sprintf(`"%s":"%s"`, key, value))
 	}
-	
+
 	l.logger.Printf("{%s}", fmt.Sprintf("%s", pairs))
 	return nil
 }
@@ -64,14 +64,14 @@ func (l *LogfmtLogger) Log(keyvals ...interface{}) error {
 	if len(keyvals)%2 != 0 {
 		keyvals = append(keyvals, "MISSING_VALUE")
 	}
-	
+
 	var pairs []string
 	for i := 0; i < len(keyvals); i += 2 {
 		key := fmt.Sprintf("%v", keyvals[i])
 		value := fmt.Sprintf("%v", keyvals[i+1])
 		pairs = append(pairs, fmt.Sprintf("%s=%s", key, value))
 	}
-	
+
 	l.logger.Printf("%s", fmt.Sprintf("%s", pairs))
 	return nil
 }
